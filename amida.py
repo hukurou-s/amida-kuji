@@ -19,6 +19,11 @@ class Amida:
         for i in range(self.times):
             self.draw_line(x_pos[i], i)
 
+    def reset(self):
+        for i in range(self.people-1):
+            for j in range(self.times):
+                self.lottery[j][i] = False
+
 
     def show(self):
         for i in self.lottery:
@@ -27,7 +32,7 @@ class Amida:
 
     def execute(self, pos):
         position = pos
-        self.show()
+        #self.show()
 
         for i in self.lottery:
 
@@ -45,14 +50,25 @@ class Amida:
                 if i[position-1]:
                     position -= 1
 
-        print(position)
+        return position
 
 
 
-amida = Amida(5, 5*2)
+people = 5
+times = people * 2
 
-amida.draw_random_line()
+amida = Amida(people, times)
+result = [0 for i in range(people)]
 
-amida.execute(0)
 
+for j in range(people):
+    for i in range(100000):
+        amida.draw_random_line()
+        result[amida.execute(j)] += 1
+
+        amida.reset()
+
+    print(j)
+    print(result)
+    result = [0 for i in range(people)]
 
