@@ -15,7 +15,14 @@ class Amida:
 
 
     def draw_random_line(self):
-        x_pos = random.choices(range(self.people-1), k=self.times)
+
+        list = range(people-1)
+        x_pos = random.choices(range(self.people-1), k=self.times-(self.people-1))
+        x_pos.extend(list)
+        random.shuffle(x_pos)
+
+        #x_pos = random.choices(range(self.people-1), k=self.times)
+
         for i in range(self.times):
             self.draw_line(x_pos[i], i)
 
@@ -55,14 +62,14 @@ class Amida:
 
 
 people = 5
-times = people * 2
+times = 5 * 2
 
 amida = Amida(people, times)
 result = [0 for i in range(people)]
 
 
 for j in range(people):
-    for i in range(100000):
+    for i in range(1000000):
         amida.draw_random_line()
         result[amida.execute(j)] += 1
 
